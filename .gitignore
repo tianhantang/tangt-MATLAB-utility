@@ -1,0 +1,9 @@
+# ignore the following files/folders
+
+# temp files and auto-generated files
+*~
+\#*
+.DS_Store
+._*
+
+# large (device dependent) material
