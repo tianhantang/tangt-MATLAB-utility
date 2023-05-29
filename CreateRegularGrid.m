@@ -32,13 +32,16 @@
 		O---> X-direction
 
 		- What is returned is the coordinate at grid center, not at grid corner.
+
+	Misc:
+		- naming convetion is unified w/ UT_2022_12_25_a.nb of stack 2023-01-08-a
 %}
 
 % Author: Tianhan Tang
 % Date of creation: 2019-01-24
 % Date of last modification: 2021-03-14
 
-function varargout = CreateRegularGrid(dP, nP, oP)
+function varargout = createRegularGrid(dP, nP, oP)
 
     xlin = ((1 : 1 : nP(1)) - (nP(1) + 1) / 2) * dP(1) + oP(1);
     ylin = ((nP(2) : -1 : 1) - (nP(2) + 1) / 2) * dP(2) + oP(2);
