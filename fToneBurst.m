@@ -44,7 +44,7 @@ function func = fSinusoid(amp, fc, phi)
 
 	omega = 2*pi*fc;
 	% tvec is a row vector
-	func = @(tvec) amp .* sin(omega * tvec + phi);
+	func = @(tvec) amp * sin(omega * tvec + phi);
 
 end
 % --------------------------------
