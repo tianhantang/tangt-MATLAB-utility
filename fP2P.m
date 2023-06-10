@@ -8,6 +8,7 @@
         - X, a d-by-N1 matrix, each column be a vector for a point in set X.
         - Y, a d-by-N2 matrix, each column be a vector for a point in set Y.
     NOTE:
+        - Expect "column first" matrix.
         - No argument check w/ the assumption that the user should know what he/she is doing.
 %}
 
