@@ -1,31 +1,33 @@
-% Calculate Line Circle Intersection
-% Syntax: [X, Y, intersection_length, line_segment_length] = circXLine(EP1, EP2, cent, R, mode)
+% @file:       circXLine.m
+% @brief:      Calculate Line Circle Intersection.
+% @usage:      [X, Y, intersection_length, line_segment_length] = circXLine(EP1, EP2, cent, R, mode)
 
 %{
-    Output:
-        - 1 output case, intLen, intersection length
-        - 2 output case, [intG1, intpG2], coordinates of the intersection points, 2 per circle
-        - 3 output case, [intG1, intpG2, intLen]
-        - 4 output case, [intG1, intpG2, intLen, len], len is the point to point distance.
-			- intG1, "entering" point, dim-by-N0-by-N1-by-N2
-			- intG2, "leaving" point, dim-by-N0-by-N1-by-N2
-			- intLen, intersection length, 1-by-N0-by-N1-by-N2
-			- len, point to point distance, 1-by-1-by-N1-by-N2
-    Input:
-        - EP1, one of the endpoints of the line segment(s), dim-by-N1 matrix.
-        - EP2, antoher endpoint of the line segment(s), dim-by-N2 matix.
-        - cent, center of the circle/sphere, dim-by-N0.
-        - R, radius of the circle/sphere, 1-by-N0 array.
-        - mo, [Optional], mode, 'line'|'segment', to specify whether line or line segment is under consideration.
-    NOTE:
-        - Line is represented parametrically, as x = x0 + Dot[n, t], and intersection is calculated by inserting the expression of line into ||x - c||^2 = r^2.
-		- Refer to Log_20190906.key p.32 for a note
+	@param[out]:
+		- 1 output case, intLen, intersection length;
+		- 2 output case, [intG1, intpG2], coordinates of the intersection points, 2 per circle;
+		- 3 output case, [intG1, intpG2, intLen];
+		- 4 output case, [intG1, intpG2, intLen, len], len is the point to point distance:
+			- intG1, "entering" point, dim-by-N0-by-N1-by-N2;
+			- intG2, "leaving" point, dim-by-N0-by-N1-by-N2;
+			- intLen, intersection length, 1-by-N0-by-N1-by-N2;
+			- len, point to point distance, 1-by-1-by-N1-by-N2.
+	@param[in]:
+		- EP1, one of the endpoints of the line segment(s), dim-by-N1 matrix.
+		- EP2, antoher endpoint of the line segment(s), dim-by-N2 matix.
+		- cent, center of the circle/sphere, dim-by-N0.
+		- R, radius of the circle/sphere, 1-by-N0 array.
+		- mo, [Optional], mode, 'line'|'segment', to specify whether line or line segment is under consideration.
+
+	@note:
+		- Line is represented parametrically, as x = x0 + Dot[n, t], and intersection is calculated by inserting the expression of line into ||x - c||^2 = r^2
+		- Refer to Log_20190906.key p.32 for a note.
 %}
 
-% Author: Tianhan Tang
-% @when:
-% - date of creation: 2019-08-26
-% - dte of last modification: 2021-12-01
+% @author: Tianhan Tang (tianhantang.pd@gmail.com)
+% @date:
+% - created on 2019-08-26
+% - updated on 2021-12-01
 
 function varargout = circXLine(EP1, EP2, cent, R, varargin)
 
@@ -40,7 +42,7 @@ function varargout = circXLine(EP1, EP2, cent, R, varargin)
 	end
 
 	% dimension check
-    [dim, N0] = size(cent);
+	[dim, N0] = size(cent);
 	[~, N1] = size(EP1);
 	[~, N2] = size(EP2);
 
@@ -62,8 +64,8 @@ function varargout = circXLine(EP1, EP2, cent, R, varargin)
 	co = EP1 - cent; % dim-N0-N1-1
 
 	% vector from endpoint to center of circle/sphere
-    var1 = dot(repmat(n, [1, N0, 1, 1]), repmat(co, [1, 1, 1, N2])); % 1-N0-N1-N2
-    var2 = dot(co, co, 1); % 1-N0-N1-1
+	var1 = dot(repmat(n, [1, N0, 1, 1]), repmat(co, [1, 1, 1, N2])); % 1-N0-N1-N2
+	var2 = dot(co, co, 1); % 1-N0-N1-1
 
 	% discriminant of intersection
 	dmt = var1.^2 - var2 + R.^2; % 1-N0-N1-N2 (R: 1-N0)
@@ -84,10 +86,10 @@ function varargout = circXLine(EP1, EP2, cent, R, varargin)
 				par = diff(t, 1, 1);
 				par(isnan(par)) = 0;				
 			case 'segment'
-                metric = cat(1, ...
-                    t >= 0, ...
-                    t <= len ...
-                );
+				metric = cat(1, ...
+					t >= 0, ...
+					t <= len ...
+				);
 				% >
 					t1 = t(1, :, :, :);
 					t2 = t(2, :, :, :);	

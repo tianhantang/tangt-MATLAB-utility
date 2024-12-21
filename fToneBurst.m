@@ -1,28 +1,32 @@
-% Generate a *function* of Gaussian modulated toneburst
+% @file:	   fToneBurst.m
+% @brief:      Generate a *function* of Gaussian modulated toneburst.
+% @usage:      func = fToneBurst(amp, fc, dur)
 
 %{
-	Output:
-		- func, a function handle of time vector
-	Input:
-		- amp, amplitude of the toneburst (sinusoid) to be modulated
-		- fc, central frequency of the sinusoid wave
-		- dur, duration of the modulated pulse
-	Example:
+	@param[out]:
+		- func, a function handle of time vector.
+	@param[in]:
+		- amp, amplitude of the toneburst (sinusoid) to be modulated.
+		- fc, central frequency of the sinusoid wave.
+		- dur, duration of the modulated pulse.
+
+	@example:
 		- fc = 2.5e+6; dur = 4/fc; tvec = 1/(31.25e+6) * (0:1:100);
 		- pulse = feval(fToneBurst(100, fc, dur), tvec);
 		- plot(pulse);
-	Misc:
-		- naming convetion is unified w/ UT_2022_12_25_a.nb of stack 2023-01-08-a
+
+	@note:
+		- naming convetion is unified w/ UT_2022_12_25_a.nb of stack 2023-01-08-a.
+		- there is NO argument check.
 %}
 
-% Author: Tianhan Tang
-% Date of creation: 2019-06-15
-% Date of last modification: 2023-05-29
+% @author: Tianhan Tang (tianhantang.pd@gmail.com)
+% @date:
+% - created on 2019-06-15
+% - updated on 2023-05-29
 
 function func = fToneBurst(amp, fc, dur)
 	
-	% NO argument check
-
 	% continuous single wave function
 	cw_ = fSinusoid(amp, fc, 0);
 
@@ -39,7 +43,9 @@ end
 
 % ////////////////////////////////////////////////////////////////
 % ///////////////////////SUB FUNCTIONS ///////////////////////////
-% --------------------------------
+% ////////////////////////////////////////////////////////////////
+
+% ---
 function func = fSinusoid(amp, fc, phi)
 
 	omega = 2*pi*fc;
@@ -47,21 +53,24 @@ function func = fSinusoid(amp, fc, phi)
 	func = @(tvec) amp * sin(omega * tvec + phi);
 
 end
-% --------------------------------
+
+% ---
 function func = fRecWin(dur)
 
 	% tvec is a row vector
 	func = @(tvec) (tvec >= 0 & tvec <= dur) * 1;		
 
 end
-% --------------------------------
+
+% ---
 function func = GaussianFcn(a, b, c)
 	
 	% tvec is a row vector
 	func = @(tvec) a * exp(-(tvec - b).^2 / (2 * c^2));
 
 end
-% --------------------------------
+
+% ---
 function func = fGaussianWeight(b, par)
 
 	c2 = -b^2 / (2*log(par));

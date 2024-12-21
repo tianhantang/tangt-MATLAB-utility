@@ -1,23 +1,25 @@
-% Creates a regular (2D) pixel grid on which the image reconstruction is performed
-% Syntax: posGrd = RegularGrid(dP, nP, oP)
+% @file:       createRegularGrid.m
+% @brief:      Creates a regular (2D) pixel grid on which the image reconstruction is performed
+% @usage:      posGrd = RegularGrid(dP, nP, oP)
 
 %{
-    Output:
-        posGrd, 2-by-N (number of grids) matrix
-		optional output is available, pleae see the source code
-    Input:
-        - dP, dP = [dx, dy], grid size
-            - dx, pixel grid size, in x-direction (2D Cartesian convention)
-            - dy, pixel grid size, in y-direction (2D Cartesian convenstion)
-        - nP, nP = [nx, ny], number of grids
-            - n1, number of pixels in x-direction
-            - n2, number of pixels in y-direction
-        - oP, oP = [ox, oy], origin
-    NOTE:
-        - Utilized MATLAB built-in function `meshgrid`.
-        - The grid is guaranteed to be symmetrical about the origin.
-        - The order of y coordinates is revesred so that it is convenient to relate image grid index (usually starts from (1,1) at upper-left corner) and physical coordinates (usually has horizontal x-axis and vertical y-axis, following right-hand rule).
-		- The illustration of the relation between the MATLAB 2-dimension array indexing and the Cartesian coordinates convention is as follow
+	@param[in]:
+		posGrd, N-by-2 (number of grids) matrix.
+		optional output is available, pleae see the source code.
+	@param[out]:
+		- dP, dP = [dx, dy], grid size:
+			- dx, pixel grid size, in x-direction (2D Cartesian convention);
+			- dy, pixel grid size, in y-direction (2D Cartesian convenstion).
+		- nP, nP = [nx, ny], number of grids:
+			- n1, number of pixels in x-direction;
+			- n2, number of pixels in y-direction.
+		- oP, oP = [ox, oy], origin.
+
+	@details:
+		- Utilized MATLAB built-in function `meshgrid`.
+		- The grid is guaranteed to be symmetrical about the origin.
+		- The order of y coordinates is revesred so that it is convenient to relate image grid index (usually starts from (1,1) at upper-left corner) and physical coordinates (usually has horizontal x-axis and vertical y-axis, following right-hand rule).
+		- The illustration of the relation between the MATLAB 2-dimension array indexing and the Cartesian coordinates convention is as follow:
 
 		O---> 2nd dim
 		|		_|_|_|_|_|_|_|_|_|_
@@ -33,13 +35,14 @@
 
 		- What is returned is the coordinate at grid center, not at grid corner.
 
-	Misc:
-		- naming convetion is unified w/ UT_2022_12_25_a.nb of stack 2023-01-08-a
+	@note:
+		- naming convetion is unified w/ UT_2022_12_25_a.nb of stack 2023-01-08-a.
 %}
 
-% Author: Tianhan Tang
-% Date of creation: 2019-01-24
-% Date of last modification: 2021-03-14
+% @author: Tianhan Tang (tianhantang.pd@gmail.com)
+% @date:
+% - created on 2019-01-24
+% - updated on 2021-03-14
 
 function varargout = createRegularGrid(dP, nP, oP)
 
